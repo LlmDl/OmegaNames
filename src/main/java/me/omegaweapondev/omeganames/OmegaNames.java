@@ -5,8 +5,10 @@ import me.omegaweapondev.omeganames.commands.NameColour;
 import me.omegaweapondev.omeganames.events.MenuListener;
 import me.omegaweapondev.omeganames.events.PlayerListener;
 import me.omegaweapondev.omeganames.menus.NameColours;
+import me.omegaweapondev.omeganames.utilities.Placeholders;
 import me.ou.library.Utilities;
 import me.ou.library.configs.ConfigCreator;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -27,6 +29,10 @@ public class OmegaNames extends JavaPlugin {
 
     // Send a message to console once the plugin has enabled
     Utilities.logInfo(true, "OmegaNames has been enabled!");
+
+    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+      new Placeholders(instance).register();
+    }
 
     // Create the files
     getConfigFile().createConfig();

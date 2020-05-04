@@ -39,13 +39,12 @@ public class NameColours extends MenuCreator {
     createItem(29, "GRAY_WOOL","Gray","&8");
     createItem(30, "BLACK_WOOL", "Black", "&0");
 
-    setItem(32, createItemStack("SPONGE", Utilities.colourise("&cCurrent"), loreMessages(Arrays.asList("&cClick here to view", "&cyour current name colour"))), player -> {
-      Utilities.message(player, MessageHandler.prefix() + " " + MessageHandler.currentNameColour(player.getDisplayName()));
+    setItem(32, createItemStack("SPONGE", Utilities.colourise("&cCurrent"), "" , loreMessages(Arrays.asList("&cClick here to view", "&cyour current name colour"))), player -> {
+      Utilities.message(player, MessageHandler.prefix() + " " + MessageHandler.currentNameColour(player, player.getDisplayName()));
     });
 
-    setItem(33, createItemStack("BARRIER", Utilities.colourise("&cReset"), loreMessages(Arrays.asList("&cClick here to remove", "&cyour name colour completely"))), player -> {
+    setItem(33, createItemStack("BARRIER", Utilities.colourise("&cReset"), "" , loreMessages(Arrays.asList("&cClick here to remove", "&cyour name colour completely"))), player -> {
       player.setDisplayName(player.getName());
-      player.setPlayerListName(player.getName());
       OmegaNames.getPlayerData().getConfig().set(player.getUniqueId().toString() + ".Name_Colour", OmegaNames.getConfigFile().getConfig().getString("Name_Colour.Default_Colour"));
       OmegaNames.getPlayerData().saveConfig();
       Utilities.message(player, MessageHandler.prefix() + " " + MessageHandler.nameColourRemoved());
@@ -55,14 +54,14 @@ public class NameColours extends MenuCreator {
   private void createItem(final Integer slot, final String material, final String name, final String colour) {
     for(Player online : Bukkit.getOnlinePlayers()) {
       if(Utilities.checkPermission(online, true, "omeganames.namecolours.open")) {
-        setItem(slot, createItemStack(material, Utilities.colourise(colour + name), nameColourDenied(online, name)), player -> {
+        setItem(slot, createItemStack(material, Utilities.colourise(colour + name), colour , nameColourDenied(online, name, colour)), player -> {
           GUIPermissionsChecker.nameColourPermsCheck(player, name, colour);
         });
       }
     }
   }
 
-  private ItemStack createItemStack(final String material, final String name, final List<String> itemLore) {
+  private ItemStack createItemStack(final String material, final String name, final String colour, final List<String> itemLore) {
     final ItemStack item =  new ItemStack(Material.valueOf(material), 1);
     final ItemMeta itemMeta = item.getItemMeta();
 
@@ -70,7 +69,7 @@ public class NameColours extends MenuCreator {
 
     if(OmegaNames.getConfigFile().getConfig().getBoolean("Per_Name_Colour_Permissions")) {
       for(Player online : Bukkit.getOnlinePlayers()) {
-        itemMeta.setLore(nameColourDenied(online, name));
+        itemMeta.setLore(Utilities.colourise(nameColourDenied(online, name, colour)));
       }
     } else {
       itemMeta.setLore(itemLore);
@@ -78,6 +77,16 @@ public class NameColours extends MenuCreator {
     item.setItemMeta(itemMeta);
 
     return item;
+  }
+
+  private List<String> loreMessages(final List<String> lore, Player player, String colour) {
+    List<String> colouredLore = new ArrayList<>();
+
+    for(String string : lore) {
+      colouredLore.add(Utilities.colourise(string).replace("%namecolour%", colour + player.getName()));
+    }
+
+    return colouredLore;
   }
 
   private List<String> loreMessages(final List<String> lore) {
@@ -90,7 +99,7 @@ public class NameColours extends MenuCreator {
     return colouredLore;
   }
 
-  private List<String> nameColourDenied(final Player player, final String colourName) {
+  private List<String> nameColourDenied(final Player player, final String colourName, final String colour) {
     List<String> customLore = MessageHandler.nameColourItemLore(colourName + player.getName());
     List<String> deniedAccess = new ArrayList<>();
 
@@ -101,10 +110,10 @@ public class NameColours extends MenuCreator {
         }
         return deniedAccess;
       } else {
-        return loreMessages(customLore);
+        return Utilities.colourise(loreMessages(customLore, player, colour));
       }
     } else {
-      return loreMessages(customLore);
+      return Utilities.colourise(loreMessages(customLore, player, colour));
     }
   }
 }

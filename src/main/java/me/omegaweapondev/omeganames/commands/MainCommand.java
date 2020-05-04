@@ -81,7 +81,7 @@ public class MainCommand extends GlobalCommand {
       Player player = (Player) sender;
 
       Utilities.message(player,
-        MessageHandler.prefix() + "&bCurrently running version: &c" + OmegaNames.getInstance().getDescription().getVersion(),
+        MessageHandler.prefix() + " &bCurrently running version: &c" + OmegaNames.getInstance().getDescription().getVersion(),
         MessageHandler.prefix() + " &bReload Command: &c/omeganames reload",
         MessageHandler.prefix() + " &bVersion Command: &c/omeganames version",
         MessageHandler.prefix() + " &bName colour command: &c/namecolour"

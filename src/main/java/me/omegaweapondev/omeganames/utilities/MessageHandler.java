@@ -2,6 +2,7 @@ package me.omegaweapondev.omeganames.utilities;
 
 import me.omegaweapondev.omeganames.OmegaNames;
 import me.ou.library.Utilities;
+import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +35,7 @@ public class MessageHandler {
     }
   }
 
-  public static String nameColourApplied(String namecolour) {
+  public static String nameColourApplied(Player player, String namecolour) {
     if(OmegaNames.getMessagesFile().getConfig().getString("Name_Colour_Applied") == null) {
       Utilities.logWarning(true,
         "The message players get when they apply a name colour in the messages.yml has returned null",
@@ -43,7 +44,7 @@ public class MessageHandler {
       );
       return "&bYour name colour has been changed to: " + namecolour;
     } else {
-      return OmegaNames.getMessagesFile().getConfig().getString("Name_Colour_Applied");
+      return OmegaNames.getMessagesFile().getConfig().getString("Name_Colour_Applied").replace("%namecolour%", player.getDisplayName());
     }
   }
 
@@ -60,7 +61,7 @@ public class MessageHandler {
     }
   }
 
-  public static String currentNameColour(String namecolour) {
+  public static String currentNameColour(Player player, String namecolour) {
     if(OmegaNames.getMessagesFile().getConfig().getString("Current_Name_Colour") == null) {
       Utilities.logWarning(true,
         "The default name colour in the config.yml has returned null",
@@ -69,7 +70,7 @@ public class MessageHandler {
       );
       return "&bYour name colour is currently set to: " + namecolour;
     } else {
-      return OmegaNames.getMessagesFile().getConfig().getString("Current_Name_Colour");
+      return OmegaNames.getMessagesFile().getConfig().getString("Current_Name_Colour").replace("%namecolour%", player.getDisplayName());
     }
   }
 

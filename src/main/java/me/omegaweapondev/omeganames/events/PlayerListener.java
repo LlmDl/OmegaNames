@@ -16,13 +16,13 @@ public class PlayerListener implements Listener {
   public static void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
     Player player = playerJoinEvent.getPlayer();
 
-    // If the player has permission and Name_Colour_Login is true, set the players namecolour everytime they log in. Otherwise remove it.
-    if(Utilities.checkPermission(player, true, "omeganames.namecolour.login") && OmegaNames.getConfigFile().getConfig().getBoolean("Name_Colour_Login")) {
-      for(String groupName : OmegaNames.getConfigFile().getConfig().getStringList("Group_Name_Colour.Groups")) {
-        player.setDisplayName(groupNameColour(player, groupName) + player.getName());
+    // Set the players namecolours
+    for(String groupName : OmegaNames.getConfigFile().getConfig().getConfigurationSection("Group_Name_Colour.Groups").getKeys(false)) {
+      if(Utilities.checkPermission(player, true, "omeganames.namecolours.groups." + groupName.toLowerCase())) {
+        Utilities.colourise(groupNameColour(player, groupName));
+      } else {
+        player.setDisplayName(Utilities.colourise(playerNameColour(player) + player.getName()));
       }
-    } else {
-      player.setDisplayName(player.getName());
     }
 
     // Call gui reload method, so item lore is refreshed for each player, as it checks for permissions
@@ -65,7 +65,6 @@ public class PlayerListener implements Listener {
     final boolean isPlayerDataNameColour = OmegaNames.getPlayerData().getConfig().isSet(player.getUniqueId().toString() + ".Name_Colour");
     final String playerDataNameColour = OmegaNames.getPlayerData().getConfig().getString(player.getUniqueId().toString() + ".Name_Colour");
 
-    final boolean isconfigNameColour = OmegaNames.getConfigFile().getConfig().isBoolean("Name_Colour.Enabled");
     final String configNameColour = MessageHandler.defaultNameColour();
 
     String finalNameColour;
@@ -77,11 +76,7 @@ public class PlayerListener implements Listener {
     }
 
     // No custom namecolour, so uses the default namecolour
-    if(isconfigNameColour) {
-      finalNameColour = configNameColour;
-      return finalNameColour;
-    } else {
-      return "";
-    }
+    finalNameColour = configNameColour;
+    return finalNameColour;
   }
 }
