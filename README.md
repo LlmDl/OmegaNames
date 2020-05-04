@@ -17,7 +17,7 @@ Below is a brief list of the features that are included in the plugin
     
     * Group Name Colours
 
-    
+    * Placeholder - %omeganames_namecolour%
  ***
  
 ### Installation & Downloading
