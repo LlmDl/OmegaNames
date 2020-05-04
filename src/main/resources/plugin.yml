@@ -5,3 +5,35 @@ description: ${project.description}
 main: ${main.class}
 
 author: ${pl.author}
+
+commands:
+  omeganames:
+    description: The main command for OmegaNames
+    usage: /omeganames
+    aliases: [on, onames, omegan]
+  namecolour:
+    description: The name colour command
+    usage: /namecolour
+    aliases: [nc, namec, namecolours, ncolours]
+
+permissions:
+  omeanames.*:
+    description: Grants the user access to all permissions
+    default: false
+    children:
+      - omeganames.reload
+      - omeganames.login
+      - omeganames.update
+      - omeganames.namecolour.open
+  omeganames.reload:
+    description: Grants the user access to the reload command
+    default: false
+  omeganames.update:
+    description: Allows the user to recieve the update messages in-game
+    default: false
+  omeganames.namecolour.open:
+    description: Grants the user access to the name colour command
+    default: false
+  omeganames.login:
+    description: Allows the user to retain their name colour when they login/logout
+    default: false
