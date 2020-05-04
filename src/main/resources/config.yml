@@ -1,0 +1,65 @@
+# -------------------------------------------------------------------------------------------
+#
+#  Welcome to OmegaNames' main configuration file.
+#
+#  Here you'll find of the settings and options that you can
+#  customize to your server needs. Most features are customizable
+#  to an extent.
+#
+# For help you can visit the wiki at: https://github.com/OmegaWeaponDev/OmegaNames/wiki
+# If you have any issues, report them here: https://github.com/OmegaWeaponDev/OmegaNames/issues
+#
+#  Colours:
+#   - darkred
+#   - red
+#   - gold
+#   - yellow
+#   - green
+#   - lime
+#   - aqua
+#   - darkaqua
+#   - darkblue
+#   - blue
+#   - pink
+#   - purple
+#   - white
+#   - lightgray
+#   - gray
+#   - black
+#
+# -------------------------------------------------------------------------------------------
+
+# If true, each of the colours will require a specific permission
+# Use the permission `omeganames.namecolours.colour.<colour>` or `omeganames.namecolours.colour.*`
+# If false, use the permission `omeganames.namecolours.colours`
+Per_Name_Colour_Permissions: false
+
+# If true, players will retain their name colour when they login/logout
+# Use the permission `omeganames.namecolour.login`
+Name_Colour_Login: true
+
+# The default namecolour players will have if they have not chosen a current name colour
+Default_Name_Colour: "&e"
+
+# Group Specific name colours.
+# Use the permission `omeganames.namecolour.groups.<group name>`
+Group_Name_Colour:
+  # Whether or not you want per-group name colours
+  Enabled: true
+  # The groups and their respective name colour
+  Groups:
+    owner: '&4'
+    admin: '&b'
+
+# Set name colours for different groups
+Group_Name_Colours:
+  # If true, players will use their group name colours if they have not set a specific name colour
+  Enabled: true
+  # The groups and their name colours
+  # Use the permission `omeganames.namecolours.groups.<groupname>` to assign the name colour to the group
+  Groups:
+    default: "&7"
+    owner: "&4"
+
+# If true, players with the permission `omeganames.update` will receive update messages
+Update_Messages: true

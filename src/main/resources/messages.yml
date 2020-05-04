@@ -1,0 +1,44 @@
+# -------------------------------------------------------------------------------------------
+#
+#  Welcome to OmegaNames' messages file.
+#
+#  Here you'll find all of the messages that you can
+#  customize to your server needs.
+#
+#  Placeholders:
+#   - %namecolour% -> Displaying the name colour applied to the players name
+#
+# -------------------------------------------------------------------------------------------
+
+# Set the prefix that shows before all the plugin messages
+Prefix: "&7&l[&bOmegaNames&7&l]"
+
+# Customize the look of the Name Colour GUI
+Name_Colour_GUI:
+  # Set the title for the Name Colours GUI
+  GUI_Title: "&3Name&aColours"
+  # Set the lore messages for the name colours
+  Colour_Lore:
+    - "&cClick here to change"
+    - "&cyour name colour to"
+    - "%namecolour%"
+  # Set the lore messages for when players don't have permission to use a name colour
+  No_Permission_Lore:
+    - "&cYou curerntly don't"
+    - "&chave permission to"
+    - "&cuse this name colour"
+
+# Set the message players receive when they change their name colour
+Name_Colour_Applied: "&bYour name colour has been changed to: %namecolour%"
+
+# Set the message players receive when they remove their name colour
+Name_Colour_Removed: "&cYour name colour has been reverted to the default colour"
+
+# Set the message players receive when they check their name colour
+Current_Name_Colour: "&bYour name colour is currently set to: %namecolour%"
+
+# Set the message you receive when you successfully reload the plugin
+Reload_Message: "&bThe plugin has successfully been reloaded"
+
+# Set the message players receive when they try to do something without permission
+No_Permission: "&cI'm sorry, but you do not have permission to do that"
