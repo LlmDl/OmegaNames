@@ -9,6 +9,7 @@ import me.omegaweapondev.omeganames.utilities.Placeholders;
 import me.ou.library.Utilities;
 import me.ou.library.configs.ConfigCreator;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -59,6 +60,20 @@ public class OmegaNames extends JavaPlugin {
     Utilities.registerCommand("namecolour", new NameColour());
 
     Utilities.registerEvents(new PlayerListener(), new MenuListener());
+
+    // The Updater
+    new UpdateChecker(this, 78327).getVersion(version -> {
+      if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+        Utilities.logInfo(true, "You are already running the latest version");
+      } else {
+        PluginDescriptionFile pdf = this.getDescription();
+        Utilities.logWarning(true,
+          "A new version of " + pdf.getName() + " is avaliable!",
+          "Current Version: " + pdf.getVersion() + " > New Version: " + version,
+          "Grab it here: https://spigotmc.org/resources/78327"
+        );
+      }
+    });
   }
 
   @Override
