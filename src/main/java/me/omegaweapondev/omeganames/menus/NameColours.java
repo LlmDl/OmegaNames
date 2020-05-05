@@ -44,7 +44,7 @@ public class NameColours extends MenuCreator {
     });
 
     setItem(33, createItemStack("BARRIER", Utilities.colourise("&cReset"), "" , loreMessages(Arrays.asList("&cClick here to remove", "&cyour name colour completely"))), player -> {
-      player.setDisplayName(player.getName());
+      player.setDisplayName(Utilities.colourise(MessageHandler.defaultNameColour() + player.getName()));
       OmegaNames.getPlayerData().getConfig().set(player.getUniqueId().toString() + ".Name_Colour", OmegaNames.getConfigFile().getConfig().getString("Name_Colour.Default_Colour"));
       OmegaNames.getPlayerData().saveConfig();
       Utilities.message(player, MessageHandler.prefix() + " " + MessageHandler.nameColourRemoved());

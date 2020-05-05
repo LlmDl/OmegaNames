@@ -34,6 +34,9 @@
 # If false, use the permission `omeganames.namecolours.colours`
 Per_Name_Colour_Permissions: false
 
+# If true, when a player gets a name colour it will show the name colour on tablist
+Tablist_Name_Colour: true
+
 # If true, players will retain their name colour when they login/logout
 # Use the permission `omeganames.namecolour.login`
 Name_Colour_Login: true
