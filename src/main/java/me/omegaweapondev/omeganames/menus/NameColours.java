@@ -104,7 +104,7 @@ public class NameColours extends MenuCreator {
     List<String> deniedAccess = new ArrayList<>();
 
     if(OmegaNames.getConfigFile().getConfig().getBoolean("Per_Name_Colour_Permissions")) {
-      if(!player.hasPermission("omeganames.namecolours.colours." + colourName.replace(" ", "").toLowerCase()) && !player.isOp()) {
+      if((!player.hasPermission("omeganames.namecolours.colours." + colourName.replace(" ", "").toLowerCase()) || !player.hasPermission("omeganames.namecolours.colours.*")) && !player.isOp()) {
         for(String string : MessageHandler.nameColourNoPermissionLore()) {
           deniedAccess.add(Utilities.colourise(string));
         }
