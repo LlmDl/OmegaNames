@@ -2,6 +2,7 @@ package me.omegaweapondev.omeganames.menus;
 
 import me.omegaweapondev.omeganames.OmegaNames;
 import me.omegaweapondev.omeganames.utilities.GUIPermissionsChecker;
+import me.omegaweapondev.omeganames.utilities.LoreHandler;
 import me.omegaweapondev.omeganames.utilities.MessageHandler;
 import me.ou.library.Utilities;
 import me.ou.library.menus.MenuCreator;
@@ -39,11 +40,11 @@ public class NameColours extends MenuCreator {
     createItem(29, "GRAY_WOOL","Gray","&8");
     createItem(30, "BLACK_WOOL", "Black", "&0");
 
-    setItem(32, createItemStack("SPONGE", Utilities.colourise("&cCurrent"), "" , loreMessages(Arrays.asList("&cClick here to view", "&cyour current name colour"))), player -> {
+    setItem(32, createItemStack("SPONGE", Utilities.colourise("&cCurrent"), loreMessages(Arrays.asList("&cClick here to view", "&cyour current name colour"))), player -> {
       Utilities.message(player, MessageHandler.prefix() + " " + MessageHandler.currentNameColour(player, player.getDisplayName()));
     });
 
-    setItem(33, createItemStack("BARRIER", Utilities.colourise("&cReset"), "" , loreMessages(Arrays.asList("&cClick here to remove", "&cyour name colour completely"))), player -> {
+    setItem(33, createItemStack("BARRIER", Utilities.colourise("&cReset"), loreMessages(Arrays.asList("&cClick here to remove", "&cyour name colour completely"))), player -> {
       player.setDisplayName(Utilities.colourise(MessageHandler.defaultNameColour() + player.getName()));
       OmegaNames.getPlayerData().getConfig().set(player.getUniqueId().toString() + ".Name_Colour", OmegaNames.getConfigFile().getConfig().getString("Name_Colour.Default_Colour"));
       OmegaNames.getPlayerData().saveConfig();
@@ -54,39 +55,22 @@ public class NameColours extends MenuCreator {
   private void createItem(final Integer slot, final String material, final String name, final String colour) {
     for(Player online : Bukkit.getOnlinePlayers()) {
       if(Utilities.checkPermission(online, true, "omeganames.namecolours.open")) {
-        setItem(slot, createItemStack(material, Utilities.colourise(colour + name), colour , nameColourDenied(online, name, colour)), player -> {
+        setItem(slot, createItemStack(material, Utilities.colourise(colour + name), LoreHandler.noPermissionLore(online, name, colour)), player -> {
           GUIPermissionsChecker.nameColourPermsCheck(player, name, colour);
         });
       }
     }
   }
 
-  private ItemStack createItemStack(final String material, final String name, final String colour, final List<String> itemLore) {
+  private ItemStack createItemStack(final String material, final String name, final List<String> itemLore) {
     final ItemStack item =  new ItemStack(Material.valueOf(material), 1);
     final ItemMeta itemMeta = item.getItemMeta();
 
     itemMeta.setDisplayName(Utilities.colourise(name));
-
-    if(OmegaNames.getConfigFile().getConfig().getBoolean("Per_Name_Colour_Permissions")) {
-      for(Player online : Bukkit.getOnlinePlayers()) {
-        itemMeta.setLore(Utilities.colourise(nameColourDenied(online, name, colour)));
-      }
-    } else {
-      itemMeta.setLore(itemLore);
-    }
+    itemMeta.setLore(itemLore);
     item.setItemMeta(itemMeta);
 
     return item;
-  }
-
-  private List<String> loreMessages(final List<String> lore, Player player, String colour) {
-    List<String> colouredLore = new ArrayList<>();
-
-    for(String string : lore) {
-      colouredLore.add(Utilities.colourise(string).replace("%namecolour%", colour + player.getName()));
-    }
-
-    return colouredLore;
   }
 
   private List<String> loreMessages(final List<String> lore) {
@@ -97,23 +81,5 @@ public class NameColours extends MenuCreator {
     }
 
     return colouredLore;
-  }
-
-  private List<String> nameColourDenied(final Player player, final String colourName, final String colour) {
-    List<String> customLore = MessageHandler.nameColourItemLore(colourName + player.getName());
-    List<String> deniedAccess = new ArrayList<>();
-
-    if(OmegaNames.getConfigFile().getConfig().getBoolean("Per_Name_Colour_Permissions")) {
-      if((!player.hasPermission("omeganames.namecolours.colours." + colourName.replace(" ", "").toLowerCase()) || !player.hasPermission("omeganames.namecolours.colours.*")) && !player.isOp()) {
-        for(String string : MessageHandler.nameColourNoPermissionLore()) {
-          deniedAccess.add(Utilities.colourise(string));
-        }
-        return deniedAccess;
-      } else {
-        return Utilities.colourise(loreMessages(customLore, player, colour));
-      }
-    } else {
-      return Utilities.colourise(loreMessages(customLore, player, colour));
-    }
   }
 }

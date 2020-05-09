@@ -24,6 +24,8 @@ public class PlayerListener implements Listener {
       if(Utilities.checkPermission(player, true, "omeganames.namecolours.groups." + groupName.toLowerCase())) {
         Utilities.colourise(Colour.groupNameColour(player, groupName));
 
+
+
         // Format the tablist
         if(OmegaNames.getConfigFile().getConfig().getBoolean("Tablist_Name_Colour")) {
           Bukkit.getScheduler().scheduleSyncRepeatingTask(OmegaNames.getInstance(), () -> {
@@ -31,7 +33,7 @@ public class PlayerListener implements Listener {
           }, 20L * 5L, 20L * 60L);
         }
       } else {
-        player.setDisplayName(Utilities.colourise(Colour.playerNameColour(player) + player.getName()));
+        player.setDisplayName(Utilities.colourise(Colour.playerNameColour(player) + player.getName() + "&r"));
 
         // Format the tablist
 
